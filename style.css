@@ -1,0 +1,43 @@
+.container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #333;
+}
+
+#sensor-data {
+  display: inline-flex;
+  justify-content: space-around;
+  margin-top: 40px;
+}
+
+#temperature{
+  background-color: #f2f2f2;
+  padding: 120px;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+}
+
+#humidity{
+  background-color: #f2f2f2;
+  padding: 120px;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+}
+
+h2 {
+  margin-top: 0;
+}
+
+#mqtt-temperature-value,
+#mqtt-humidity-value,#coap-temperature-value, #coap-humidity-value {
+  font-size: 24px;
+}
+
+#mqtt {
+  display: flex;  
+}

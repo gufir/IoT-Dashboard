@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IoT Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Sharp" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <h1>IOT Dashboard</h1>
+  </div>
+  <div class="container">
+    <h1>MQTT Data</h1>
+    <div id="sensor-data">
+      <div id="temperature">
+        <h2>Temperature</h2>
+        <div class="icon">
+          <span class="material-symbols-sharp"> device_thermostat </span>
+        </div>
+        <p id="mqtt-temperature-value">--</p>
+      </div>
+      <div id="humidity">
+        <h2>Humidity</h2>
+        <span class="material-symbols-sharp">
+          humidity_percentage
+        </span>
+        <p id="mqtt-humidity-value">--</p>
+      </div>
+      <div id="delay">
+        <h2>Delay</h2>
+        <span class="material-symbols-sharp">
+          clock_loader_60
+        </span>
+        <p id="mqtt-delay-value">--</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <h1>CoAP Data</h1>
+    <div id="sensor-data">
+      <div id="temperature">
+        <h2>Temperature</h2>
+        <div class="icon">
+          <span class="material-symbols-sharp"> device_thermostat </span>
+        </div>
+        <p id="coap-temperature-value">--</p>
+      </div>
+      <div id="humidity">
+        <h2>Humidity</h2>
+        <span class="coap-symbols-sharp">
+          humidity_percentage
+        </span>
+        <p id="coap-humidity-value">--</p>
+      </div>
+      <div id="delay">
+        <h2>Delay</h2>
+        <span class="material-symbols-sharp">
+          clock_loader_60
+        </span>
+        <p id="coap-delay-value">--</p>
+      </div>
+    </div>
+  </div>
+  <script type="module" src="data-mqtt.js"></script>
+
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.plot.ly/plotly-2.16.1.min.js"></script>
+  <script>
+    var socket = io();
+    // Update CoAP data
+    socket.on('coapData', (data) => {
+      const coapdata = JSON.parse(data)
+      document.getElementById('coap-temperature-value').textContent = coapdata.Temperature;
+      document.getElementById('coap-temperature-humidity').textContent = coapdata.humidity;
+    });
+    
+    // Update MQTT messages
+    socket.on('mqttMessage', (message) => {
+      const mqttdata = JSON.parse(message);
+      document.getElementById('mqtt-temperature-value').textContent = mqttdata.Temperature;
+      document.getElementById('mqtt-temperature-humidity').textContent = mqttdata.humidity;
+    });
+  </script>
+
+</body>
+</html>

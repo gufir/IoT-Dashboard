@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>IoT Dashboard</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Symbols+Sharp" rel="stylesheet"/>
+</head>
+<body>
+  <div class="container">
+    <h1>IOT Dashboard</h1>
+  </div>
+  <div id = "mqtt">
+    <div class="container">
+      <h1>MQTT Data</h1>
+      <div id="sensor-data">
+        <div id="temperature">
+          <h2>Temperature</h2>
+          <div class="icon">
+            <span class="material-symbols-sharp"> device_thermostat </span>
+          </div>
+          <p id="mqtt-temperature-value">--</p>
+        </div>
+        <div id="humidity">
+          <h2>Humidity</h2>
+          <span class="material-symbols-sharp">
+            humidity_percentage
+          </span>
+          <p id="mqtt-humidity-value">--</p>
+        </div>
+      </div>
+    </div> 
+  </div>
+
+
+  <div id="coap">
+    <div class="container">
+      <h1>CoAP Data</h1>
+      <div id="sensor-data">
+        <div id="temperature">
+          <h2>Temperature</h2>
+          <div class="icon">
+            <span class="material-symbols-sharp"> device_thermostat </span>
+          </div>
+          <p id="coap-temperature-value">--</p>
+        </div>
+        <div id="humidity">
+          <h2>Humidity</h2>
+          <span class="material-symbols-sharp">
+            humidity_percentage
+          </span>
+          <p id="coap-humidity-value">--</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const socket1 = new WebSocket('ws://localhost:3001');
+
+    socket1.addEventListener('message', (event1) => {
+    const sensorData = JSON.parse(event1.data);
+    document.getElementById('mqtt-temperature-value').textContent = sensorData.Temperature;
+    document.getElementById('mqtt-humidity-value').textContent = sensorData.Humidity;
+  });
+  
+  const socket2 = new WebSocket('ws://localhost:3002');
+  socket2.addEventListener('message', (event2) => {
+    const sensorData2 = JSON.parse(event2.data);
+    document.getElementById('coap-temperature-value').textContent = sensorData2.Temperature;
+    document.getElementById('coap-humidity-value').textContent = sensorData2.Humidity;
+});
+</script>
+  
+
+</body>
+</html>
